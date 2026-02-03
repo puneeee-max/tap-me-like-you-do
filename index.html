@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ff9a9e, #ff4d6d);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    color: white;
+}
+
+/* Floating emoji layer */
+.emoji {
+    position: fixed;
+    font-size: 26px;
+    animation: float 8s linear infinite;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+@keyframes float {
+    0% { transform: translateY(110vh); }
+    100% { transform: translateY(-10vh); }
+}
+
+/* Center content */
+.container {
+    position: relative;
+    z-index: 3;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* GIFs */
+.gif {
+    width: 180px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+/* Text */
+h1 {
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+button {
+    padding: 16px 34px;
+    font-size: 20px;
+    border-radius: 40px;
+    border: none;
+    margin: 10px;
+    touch-action: manipulation;
+}
+
+#yes {
+    background: white;
+    color: #ff4d6d;
+}
+
+#no {
+    background: rgba(255,255,255,0.4);
+    color: white;
+}
+
+/* Slideshow */
+.slideshow {
+    width: 85%;
+    max-width: 320px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: fall 3s linear infinite;
+    z-index: 5;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh) rotate(0); }
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="love.mp3" loop></audio>
+
+<div class="container" id="container">
+    <img src="love1.gif" class="gif">
+    <h1>Muddamma ❤️</h1>
+    <h2 id="question">Will you be my Valentine?</h2>
+
+    <div>
+        <button id="yes">YES 💕</button>
+        <button id="no">NO 😜</button>
+    </div>
+
+    <img src="love2.gif" class="gif">
+</div>
+
+<script>
+const emojis = ["❤️","💖","💘","💕","😍"];
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const question = document.getElementById("question");
+const container = document.getElementById("container");
+const music = document.getElementById("music");
+
+const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg"];
+let photoIndex = 0;
+
+const noTexts = [
+  "Are you sure? 🤨",
+  "Think again, Muddamma 🥺",
+  "My heart is cracking 💔",
+  "Last chance 😭",
+  "Okay okay… I know it’s YES 😌"
+];
+let noCount = 0;
+
+/* Floating emojis */
+function spawnEmoji() {
+    const e = document.createElement("div");
+    e.className = "emoji";
+    e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left = Math.random()*100 + "vw";
+    e.style.animationDuration = (6 + Math.random()*4) + "s";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 9000);
+}
+setInterval(spawnEmoji, 400);
+
+/* NO button logic */
+noBtn.addEventListener("touchstart", () => {
+    if (noCount < noTexts.length) {
+        question.innerText = noTexts[noCount];
+        noCount++;
+    } else {
+        question.innerText = "I knew you’d say YES 😘";
+        noBtn.style.display = "none";
+    }
+});
+
+/* YES button */
+yesBtn.addEventListener("touchstart", () => {
+    music.play();
+
+    // Confetti
+    for (let i=0;i<80;i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random()*100 + "vw";
+        c.style.background = ["#fff","#ffd166","#ff4d6d"][Math.floor(Math.random()*3)];
+        c.style.animationDuration = (2 + Math.random()*2) + "s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+
+    container.innerHTML = `
+        <h1>Yayyyy 🥰</h1>
+        <h2>Forever my Valentine ❤️</h2>
+        <img id="slide" class="slideshow" src="${photos[0]}">
+    `;
+
+    setInterval(() => {
+        photoIndex = (photoIndex+1)%photos.length;
+        document.getElementById("slide").src = photos[photoIndex];
+    }, 2500);
+});
+</script>
+
+</body>
+</html>
