@@ -1,3 +1,4 @@
+<div class="glass-card">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,8 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
+<div class="spotlight"></div>
+
 body {
     margin: 0;
     padding: 0;
@@ -14,6 +17,32 @@ body {
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
     color: #f5f5f5;
+}
+
+.glass-card {
+    position: relative;
+    width: 92%;
+    max-width: 420px;
+    padding: 30px 20px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+        0 0 30px rgba(255, 79, 154, 0.25),
+        inset 0 0 20px rgba(255,255,255,0.05);
+    text-align: center;
+}
+
+.spotlight {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at var(--x) var(--y),
+        rgba(255, 79, 154, 0.18),
+        transparent 40%
+    );
 }
 
 .glow-text {
@@ -114,19 +143,18 @@ button {
     opacity: 0.8;
 }
 
-@keyframes floatUp {
-    0% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
+@keyframes heartbeat {
+    0% { transform: scale(1); text-shadow: 0 0 10px #ff4f9a; }
+    25% { transform: scale(1.04); text-shadow: 0 0 30px #ff1f7a; }
+    40% { transform: scale(1); }
+    60% { transform: scale(1.06); text-shadow: 0 0 40px #ff1f7a; }
+    100% { transform: scale(1); }
 }
+
+.glow-text {
+    animation: heartbeat 2s infinite;
+}
+
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "love";
@@ -253,6 +281,11 @@ noBtn.addEventListener("touchstart", () => {
     noBtn.style.transform = `scale(${scale})`;
 });
 
+document.addEventListener("touchmove", e => {
+    const t = e.touches[0];
+    document.documentElement.style.setProperty('--x', t.clientX + 'px');
+    document.documentElement.style.setProperty('--y', t.clientY + 'px');
+});
 
 /* YES button */
 yesBtn.addEventListener("touchstart", () => {
@@ -293,3 +326,4 @@ setInterval(() => {
 
 </body>
 </html>
+</div>
