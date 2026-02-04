@@ -5,39 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Muddamma ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
   height: 100vh;
-  background: radial-gradient(circle at top, #111 0%, #000 60%);
+  background: radial-gradient(circle at top, #111 0%, #000 65%);
   color: #fff;
-  font-family: 'Orbitron', sans-serif;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.glow {
-  text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
-}
-
-#container {
   text-align: center;
-  width: 100%;
-  padding: 20px;
 }
+
+#container { width: 100%; padding: 20px; position: relative; }
 
 h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
+  font-size: 3.2rem;
   margin-bottom: 30px;
+  text-shadow: 0 0 20px #ff4d6d;
 }
 
 button {
-  padding: 15px 30px;
+  padding: 15px 32px;
   font-size: 1.2rem;
   border-radius: 30px;
   border: none;
@@ -46,9 +40,8 @@ button {
 
 #yesBtn {
   background: #ff4d6d;
-  color: white;
+  color: #fff;
   animation: breathe 2s infinite;
-  margin-right: 20px;
 }
 
 #noBtn {
@@ -59,65 +52,78 @@ button {
 
 @keyframes breathe {
   0% { box-shadow: 0 0 5px #ff4d6d; }
-  50% { box-shadow: 0 0 25px #ff4d6d; }
+  50% { box-shadow: 0 0 30px #ff4d6d; }
   100% { box-shadow: 0 0 5px #ff4d6d; }
 }
 
-.heart {
+.floatingGif {
   position: absolute;
-  color: red;
-  animation: float 6s linear infinite;
+  width: 120px;
+  animation: floatGif 10s linear infinite;
 }
 
-@keyframes float {
+@keyframes floatGif {
   from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
+  to { transform: translateY(-20vh); }
 }
 
-#slideshow, #okBtn, #finalText {
-  display: none;
+#message {
+  margin-top: 25px;
+  font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
 }
+
+#slideshow { display: none; margin-top: 30px; }
 
 #slideshow img {
   max-width: 90%;
   max-height: 70vh;
   border-radius: 20px;
   box-shadow: 0 0 30px #ff4d6d;
+  transition: transform 3s ease, filter 3s ease;
 }
 
 #okBtn {
-  margin-top: 20px;
+  display: none;
+  margin-top: 25px;
   background: #ff4d6d;
+  color: white;
 }
 
 #finalText {
+  display: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
-  margin-top: 20px;
+  font-size: 4rem;
+  text-shadow: 0 0 25px #ff4d6d;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="music.mp3" loop></audio>
+<audio id="music" src="love.mp3" loop autoplay></audio>
 
 <div id="container">
-  <h1 class="glow">Muddamma, will you be my Valentine? 💖</h1>
+  <h1>Muddamma, will you be my Valentine? 💖</h1>
 
   <button id="yesBtn">Yes 💘</button>
   <button id="noBtn">No 🙈</button>
 
-  <div id="message" class="glow"></div>
+  <div id="message"></div>
 
   <div id="slideshow">
     <img id="slideImg">
   </div>
 
   <button id="okBtn">Ok now 💞</button>
-
-  <div id="finalText" class="glow"></div>
 </div>
+
+<div id="finalText"></div>
 
 <script>
 const yesBtn = document.getElementById("yesBtn");
@@ -129,34 +135,49 @@ const okBtn = document.getElementById("okBtn");
 const finalText = document.getElementById("finalText");
 const music = document.getElementById("music");
 
+const noTexts = [
+  "Thagolappa NO anthe!! 😏",
+  "Naanu muddu nim gowdru 🥺",
+  "Bitbidthina sundari 😂",
+  "Ishte Ishte, bele ne illa 💔",
+  "Ashteya, sumne yes othu 💘"
+];
+let noIndex = 0;
 let slideIndex = 1;
 
-// floating hearts
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 400);
+// Floating GIFs
+function createGif(src) {
+  const gif = document.createElement("img");
+  gif.src = src;
+  gif.className = "floatingGif";
+  gif.style.left = Math.random() * 80 + "vw";
+  gif.style.animationDuration = Math.random() * 5 + 6 + "s";
+  document.body.appendChild(gif);
+  return gif;
+}
 
-// No button movement
+const gif1 = createGif("love1.gif");
+const gif2 = createGif("love2.gif");
+
+// NO button logic
 noBtn.onclick = () => {
+  message.innerText = noTexts[noIndex % noTexts.length];
+  noIndex++;
   noBtn.style.top = Math.random() * 70 + "vh";
   noBtn.style.left = Math.random() * 70 + "vw";
 };
 
-// YES logic
+// YES button
 yesBtn.onclick = () => {
   music.play();
   yesBtn.style.display = "none";
   noBtn.style.display = "none";
+  gif1.remove();
+  gif2.remove();
 
-  message.innerHTML = "Yayy, You are my Valentine today, tomorrow and forever 💖";
-  startConfetti();
+  message.innerText = "Yayy, You are my Valentine today, tomorrow and forever 💖";
   startSlideshow();
+  startConfetti();
 };
 
 // Slideshow
@@ -177,25 +198,26 @@ function startSlideshow() {
 
 // OK NOW
 okBtn.onclick = () => {
-  slideImg.style.filter = "blur(4px)";
+  okBtn.style.display = "none";
+  slideImg.style.filter = "blur(5px)";
   slideImg.style.transform = "scale(1.1)";
-  typeText("I LOVE YOU MUDDU HENDATHI ❤️");
+  typeWriter("I LOVE YOU MUDDU HENDATHI ❤️");
 };
 
 // Typewriter
-function typeText(text) {
-  finalText.style.display = "block";
+function typeWriter(text) {
+  finalText.style.display = "flex";
   let i = 0;
   const t = setInterval(() => {
     finalText.innerHTML += text.charAt(i);
     i++;
     if (i === text.length) clearInterval(t);
-  }, 100);
+  }, 120);
 }
 
 // Confetti
 function startConfetti() {
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 140; i++) {
     const c = document.createElement("div");
     c.style.position = "absolute";
     c.style.width = "8px";
@@ -204,7 +226,7 @@ function startConfetti() {
     c.style.top = Math.random() * 100 + "vh";
     c.style.left = Math.random() * 100 + "vw";
     c.style.opacity = Math.random();
-    c.style.animation = "float 4s linear infinite";
+    c.style.animation = "floatGif 4s linear infinite";
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 6000);
   }
