@@ -152,7 +152,7 @@ button {
 
 <body>
 
-<audio id="music" src="love.mp3" loop autoplay></audio>
+<audio id="music" src="love.mp3" loop></audio>
 
 <div id="valentineMsg">
   Yayy, you are my Valentine today, tomorrow and forever 💖
@@ -207,6 +207,17 @@ const noTexts = [
 let noIndex = 0;
 let slideIndex = 1;
 let confettiInterval;
+let musicStarted = false;
+
+function startMusicOnce() {
+  if (!musicStarted) {
+    music.play().catch(() => {});
+    musicStarted = true;
+  }
+}
+
+document.addEventListener("click", startMusicOnce, { once: true });
+document.addEventListener("touchstart", startMusicOnce, { once: true });
 
 /* Floating hearts */
 setInterval(() => {
