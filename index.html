@@ -1,356 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine ❤️</title>
+<title>For Muddamma ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
-<div class="spotlight"></div>
-
 body {
     margin: 0;
-    padding: 0;
     height: 100vh;
-    background: radial-gradient(circle at top, #1c1c1c, #050505);
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    color: #f5f5f5;
-}
-    
-body {
+    background: radial-gradient(circle at top, #1a1a1a, #050505);
     font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
-.glow-text {
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 1px;
-}
-
-.glass-card {
-    position: relative;
+.container {
     width: 94%;
     max-width: 440px;
     padding: 32px 22px;
     border-radius: 28px;
     background: linear-gradient(145deg, #0b0b0b, #141414);
-    box-shadow:
-        0 0 40px rgba(255, 79, 154, 0.25),
-        inset 0 0 25px rgba(255, 255, 255, 0.03);
+    box-shadow: 0 0 40px rgba(255,79,154,0.25),
+                inset 0 0 25px rgba(255,255,255,0.03);
     text-align: center;
-}
-
-.spotlight {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-        circle at var(--x) var(--y),
-        rgba(255, 79, 154, 0.18),
-        transparent 40%
-    );
+    position: relative;
 }
 
 .glow-text {
+    font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
-    text-align: center;
     color: #ff4f9a;
-    text-shadow:
-        0 0 5px #ff4f9a,
-        0 0 10px #ff4f9a,
-        0 0 20px #ff1f7a,
-        0 0 40px #ff1f7a;
-    animation: pulseGlow 2.5s infinite alternate;
+    text-shadow: 0 0 12px #ff4f9a, 0 0 30px #ff1f7a;
+    animation: heartbeat 2s infinite;
 }
 
-@keyframes pulseGlow {
-    from {
-        text-shadow:
-            0 0 5px #ff4f9a,
-            0 0 10px #ff4f9a;
-    }
-    to {
-        text-shadow:
-            0 0 20px #ff1f7a,
-            0 0 40px #ff1f7a;
-    }
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.05); }
+    60% { transform: scale(1); }
 }
 
-/* Floating emoji layer */
-.emoji {
-    position: fixed;
-    font-size: 26px;
-    animation: float 8s linear infinite;
-    opacity: 0.8;
-    z-index: 1;
-}
-
-@keyframes float {
-    0% { transform: translateY(110vh); }
-    100% { transform: translateY(-10vh); }
-}
-
-/* Center content */
-.container {
+.buttons {
+    margin-top: 30px;
+    height: 80px;
     position: relative;
-    z-index: 3;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
 }
 
-/* GIFs */
-.gif {
-    width: 180px;
-    border-radius: 20px;
-    margin-bottom: 15px;
-}
-
-/* Text */
-h1 {
-    font-size: 36px;
-    margin: 10px 0;
-}
-
-h2 {
-    font-size: 22px;
-    margin-bottom: 30px;
-}
-
-/* Buttons */
 button {
     padding: 14px 26px;
     font-size: 1.1rem;
     border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: linear-gradient(145deg, #111, #1f1f1f);
-    color: #fff;
+    border: none;
+    background: #111;
+    color: white;
     cursor: pointer;
-    box-shadow:
-        0 0 10px rgba(255, 79, 154, 0.3),
-        inset 0 0 10px rgba(255, 255, 255, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: absolute;
 }
 
 #yesBtn {
+    left: 30%;
     animation: breathe 2.2s infinite ease-in-out;
-}
-
-#yesBtn:hover {
-    transform: scale(1.1);
-    box-shadow:
-        0 0 20px #ff4f9a,
-        0 0 40px #ff1f7a;
-}
-.love {
-    position: absolute;
-    font-size: 24px;
-    animation: floatUp 6s linear infinite;
-    opacity: 0.8;
+    box-shadow: 0 0 15px #ff4f9a;
 }
 
 @keyframes breathe {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 12px rgba(255, 79, 154, 0.4);
-    }
-    50% {
-        transform: scale(1.07);
-        box-shadow: 0 0 30px rgba(255, 79, 154, 0.9);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 12px rgba(255, 79, 154, 0.4);
-    }
+    0% { transform: scale(1); box-shadow: 0 0 12px #ff4f9a; }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px #ff1f7a; }
+    100% { transform: scale(1); box-shadow: 0 0 12px #ff4f9a; }
 }
 
-    
-@keyframes heartbeat {
-    0% { transform: scale(1); text-shadow: 0 0 10px #ff4f9a; }
-    25% { transform: scale(1.04); text-shadow: 0 0 30px #ff1f7a; }
-    40% { transform: scale(1); }
-    60% { transform: scale(1.06); text-shadow: 0 0 40px #ff1f7a; }
-    100% { transform: scale(1); }
+#noBtn {
+    right: 30%;
 }
 
-.glow-text {
-    animation: heartbeat 2s infinite;
-}
-
-setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "love";
-    heart.innerText = ["❤️","💖","💘","💝","💕"][Math.floor(Math.random()*5)];
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 6000);
-}, 600);
-
-#yes {
-    background: white;
-    color: #ff4d6d;
-}
-
-#no {
-    background: rgba(255,255,255,0.4);
-    color: white;
-}
-
-/* Slideshow */
 .slideshow {
+    display: none;
+    margin-top: 25px;
+    position: relative;
+}
+
+.slideshow img {
     width: 85%;
     max-width: 320px;
-    border-radius: 20px;
-    margin-top: 20px;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
+    border-radius: 18px;
+    transition: opacity 1s ease-in-out, filter 1s ease;
 }
 
-/* Confetti */
+#finalBtn {
+    display: none;
+    margin-top: 25px;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    background: #111;
+    color: #ff4f9a;
+    box-shadow: 0 0 20px #ff4f9a;
+    border: none;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1); filter: blur(0); }
+    to { transform: scale(1.25); filter: blur(6px); }
+}
+
+.love-text-final {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #ff4f9a;
+    text-align: center;
+    text-shadow: 0 0 30px #ff1f7a;
+    padding: 20px;
+}
+
 .confetti {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    animation: fall 3s linear infinite;
-    z-index: 5;
+    width: 8px;
+    height: 14px;
+    top: -10px;
+    animation: fall 3.5s linear forwards;
+    z-index: 9999;
 }
 
 @keyframes fall {
-    from { transform: translateY(-10vh) rotate(0); }
-    to { transform: translateY(110vh) rotate(360deg); }
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="love.mp3" loop></audio>
-
-<div class="container" id="container">
-    <img src="love1.gif" class="gif">
+<div class="container" id="captureArea">
     <h1 class="glow-text">
-    Will you be my Valentine, <br>Muddamma? 💕
-</h1>
+        Will you be my Valentine,<br>Muddamma? 💕
+    </h1>
 
-    <h2 id="question">Will you be my Valentine?</h2>
-
-    <div>
-        <button id="yes">YES 💕</button>
-        <button id="no">NO 😜</button>
+    <div class="buttons">
+        <button id="yesBtn">YES ❤️</button>
+        <button id="noBtn">NO 🙃</button>
     </div>
 
-    <img src="love2.gif" class="gif">
+    <div class="slideshow" id="slideshow">
+        <img id="slide" src="photos/photo1.jpg">
+        <button id="finalBtn">ok now ❤️</button>
+    </div>
 </div>
 
+<audio id="bgMusic" loop>
+    <source src="love.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-const emojis = ["❤️","💖","💘","💕","😍"];
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-const question = document.getElementById("question");
-const container = document.getElementById("container");
-const music = document.getElementById("music");
-
-const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg","photo10.jpg"];
-let photoIndex = 0;
-
-const noTexts = [
-  "Aahahaa ishtena? 🤨",
-  "Muddamma nanige NO na??🥺",
-  "Ishte Ishte 💔",
-  "Aaythu bidamma, naavyake beku ivaga!! 😭",
-  "Sundari nanige gothu 😌"
-];
-let noCount = 0;
-
-/* Floating emojis */
-function spawnEmoji() {
-    const e = document.createElement("div");
-    e.className = "emoji";
-    e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-    e.style.left = Math.random()*100 + "vw";
-    e.style.animationDuration = (6 + Math.random()*4) + "s";
-    document.body.appendChild(e);
-    setTimeout(() => e.remove(), 9000);
-}
-setInterval(spawnEmoji, 400);
-
-let scale = 1;
-
-/* NO button logic — funny + runaway + shrinking */
-noBtn.addEventListener("touchstart", () => {
-
-    // Funny response text
-    if (noCount < noTexts.length) {
-        question.innerText = noTexts[noCount];
-        noCount++;
-    } else {
-        question.innerText = "I knew you’d say YES 😘";
-        noBtn.style.display = "none";
-        return;
+// MUSIC ON FIRST TOUCH
+const music = document.getElementById("bgMusic");
+document.addEventListener("touchstart", () => {
+    if (music.paused) {
+        music.volume = 0.6;
+        music.play().catch(()=>{});
     }
+}, { once: true });
 
-    // Random movement
-    const x = Math.random() * 70;
-    const y = Math.random() * 60;
-    noBtn.style.position = "fixed";
-    noBtn.style.left = x + "vw";
-    noBtn.style.top = y + "vh";
-
-    // Shrink effect
-    scale -= 0.12;
-    if (scale < 0.4) scale = 0.4; // minimum size
-    noBtn.style.transform = `scale(${scale})`;
-});
-
-document.addEventListener("touchmove", e => {
-    const t = e.touches[0];
-    document.documentElement.style.setProperty('--x', t.clientX + 'px');
-    document.documentElement.style.setProperty('--y', t.clientY + 'px');
-});
-
-/* YES button */
-yesBtn.addEventListener("touchstart", () => {
-    music.play();
-
-    // Confetti
-    for (let i=0;i<80;i++) {
+// CONFETTI
+function confettiBurst() {
+    for (let i = 0; i < 120; i++) {
         const c = document.createElement("div");
         c.className = "confetti";
         c.style.left = Math.random()*100 + "vw";
-        c.style.background = ["#fff","#ffd166","#ff4d6d"][Math.floor(Math.random()*3)];
-        c.style.animationDuration = (2 + Math.random()*2) + "s";
+        c.style.background = ["#ff4f9a","#ff1f7a","#fff","#ffccd5"][Math.floor(Math.random()*4)];
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
+        setTimeout(()=>c.remove(),4000);
     }
+}
 
-    container.innerHTML = `
-        <h1>Yayyyy 🥰</h1>
-        <h2>Forever my Valentine ❤️</h2>
-        <img id="slide" class="slideshow" src="${photos[0]}">
-    `;
+// NO BUTTON FUN
+const noBtn = document.getElementById("noBtn");
+const noTexts = ["Sure? 😏","Think again 😜","Really NO? 🥺","Last chance 😈"];
+noBtn.addEventListener("touchstart", () => {
+    noBtn.innerText = noTexts[Math.floor(Math.random()*noTexts.length)];
+    noBtn.style.left = Math.random()*60 + "%";
+    noBtn.style.top = Math.random()*60 + "%";
+});
 
+// SLIDESHOW
+const yesBtn = document.getElementById("yesBtn");
+const slideshow = document.getElementById("slideshow");
 const slide = document.getElementById("slide");
+const finalBtn = document.getElementById("finalBtn");
 
-setInterval(() => {
-    slide.style.opacity = 0;
+const photos = Array.from({length:10},(_,i)=>`photos/photo${i+1}.jpg`);
+let idx = 0, cycles = 0;
 
-    setTimeout(() => {
-        photoIndex = (photoIndex + 1) % photos.length;
-        slide.src = photos[photoIndex];
-        slide.style.opacity = 1;
-    }, 1000);
+yesBtn.addEventListener("click", () => {
+    document.querySelector(".buttons").style.display = "none";
+    slideshow.style.display = "block";
+    confettiBurst();
 
-}, 3500);
+    const interval = setInterval(() => {
+        slide.style.opacity = 0;
+        setTimeout(() => {
+            idx++;
+            if (idx >= photos.length) { idx = 0; cycles++; }
+            slide.src = photos[idx];
+            slide.style.opacity = 1;
+            if (cycles === 1) {
+                clearInterval(interval);
+                finalBtn.style.display = "inline-block";
+            }
+        }, 1000);
+    }, 3500);
+});
 
+// FINAL TYPEWRITER + SCREENSHOT
+finalBtn.addEventListener("click", async () => {
+    slide.style.animation = "slowZoom 6s forwards";
+
+    const text = document.createElement("div");
+    text.className = "love-text-final";
+    document.getElementById("captureArea").appendChild(text);
+
+    const message = "I LOVE YOU\nMUDDU HENDATHI ❤️";
+    let i = 0;
+
+    const typer = setInterval(() => {
+        text.innerHTML = message.slice(0, i++).replace("\n","<br>");
+        if (i > message.length) {
+            clearInterval(typer);
+
+            setTimeout(async () => {
+                const canvas = await html2canvas(document.getElementById("captureArea"));
+                const link = document.createElement("a");
+                link.download = "forever_with_muddu.png";
+                link.href = canvas.toDataURL();
+                link.click();
+            }, 1500);
+        }
+    }, 120);
 });
 </script>
 
 </body>
 </html>
-</div>
