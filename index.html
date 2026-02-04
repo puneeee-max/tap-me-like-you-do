@@ -264,153 +264,124 @@
     /* PRELOAD IMAGES */
     const photos = Array.from({length:10}, (_,i)=>`photo${i+1}.jpg`);
     photos.forEach(src => {
-      const img = new Image();
-      img.src = src;
+        const img = new Image();
+        img.src = src;
     });
     
     /* MUSIC */
     const music = document.getElementById("music");
     let started = false;
     document.addEventListener("click", () => {
-      if (!started) {
-        music.play().catch(()=>{});
-        started = true;
-      }
+        if (!started) {
+            music.play().catch(()=>{});
+            started = true;
+        }
     }, { once:true });
-
+    
     /* HEARTS */
     for (let i = 0; i < 25; i++) {
-      const h = document.createElement("div");
-      h.className = "heart layer-visual";
-      h.innerHTML = "❤️";
-      h.style.left = Math.random()*100 + "vw";
-      h.style.animationDuration = 6 + Math.random()*6 + "s";
-      document.body.appendChild(h);
+        const h = document.createElement("div");
+        h.className = "heart layer-visual";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.animationDuration = 6 + Math.random()*6 + "s";
+        document.body.appendChild(h);
     }
-
+    
     /* CONFETTI */
     let confettiTimer;
     function startConfetti() {
-      confettiTimer = setInterval(() => {
-        const c = document.createElement("div");
-        c.className = "confetti layer-visual";
-        c.style.left = Math.random()*100 + "vw";
-        c.style.background = ["orange","green","yellow","white"][Math.floor(Math.random()*4)];
-        c.style.animationDuration = 3 + Math.random()*3 + "s";
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),6000);
-      }, 120);
+        confettiTimer = setInterval(() => {
+            const c = document.createElement("div");
+            c.className = "confetti layer-visual";
+            c.style.left = Math.random()*100 + "vw";
+            c.style.background = ["orange","green","yellow","white"][Math.floor(Math.random()*4)];
+            c.style.animationDuration = 3 + Math.random()*3 + "s";
+            document.body.appendChild(c);
+            setTimeout(()=>c.remove(),6000);
+        }, 120);
     }
     function stopConfetti() {
-      clearInterval(confettiTimer);
+        clearInterval(confettiTimer);
     }
-
+    
     /* NO BUTTON */
     const funny = [
-      "Thagolappa NO anthe!! 😏",
-      "Naanu muddu nim gowdru 🥺",
-      "Bitbidthina sundari 😂",
-      "Ishte Ishte, bele ne illa 💔",
-      "Ashteya, sumne yes oththu 💘"
+        "Thagolappa NO anthe!! 😏",
+        "Naanu muddu nim gowdru 🥺",
+        "Bitbidthina sundari 😂",
+        "Ishte Ishte, bele ne illa 💔",
+        "Ashteya, sumne yes oththu 💘"
     ];
-
+    
     document.getElementById("noBtn").onclick = () => {
-      document.getElementById("funnyText").innerText =
-        funny[Math.floor(Math.random()*funny.length)];
-      document.getElementById("noBtn").style.transform =
-        `translate(${Math.random()*160-80}px,${Math.random()*160-80}px)`;
+        document.getElementById("funnyText").innerText = funny[Math.floor(Math.random()*funny.length)];
+        document.getElementById("noBtn").style.transform = `translate(${Math.random()*160-80}px,${Math.random()*160-80}px)`;
     };
-
+    
     /* YES FLOW */
-    const photos = Array.from({length:10}, (_,i)=>`photo${i+1}.jpg`);
     let idx = 0;
-
     document.getElementById("yesBtn").onclick = () => {
-      document.getElementById("questionBox").style.display = "none";
-      document.getElementById("gifTop").style.display = "none";
-      document.getElementById("yesText").style.display = "block";
-      
-      const img = document.getElementById("slideImg");
-      // Force the first image to show immediately
-      img.src = photos[0];
-
-      const timer = setInterval(() => {
-        idx++;
-        if (idx < photos.length) {
-          // Pre-fetching the next image logic is already handled by our preloader!
-          img.src = photos[idx];
-        } else {
-          clearInterval(timer);
-          document.getElementById("okBtn").style.display = "block";
-        }
-      }, 2500);
+        // Hide UI elements
+        document.getElementById("questionBox").style.display = "none";
+        document.getElementById("gifTop").style.display = "none";
+        document.getElementById("yesText").style.display = "block";
+        
+        // Start Visual Effects
+        startConfetti();
+    
+        const show = document.getElementById("slideshow");
+        const img = document.getElementById("slideImg");
+        show.style.display = "block";
+        img.src = photos[0];
+    
+        // Slideshow Loop
+        const timer = setInterval(() => {
+            idx++;
+            if (idx < photos.length) {
+                img.src = photos[idx];
+            } else {
+                clearInterval(timer);
+                document.getElementById("okBtn").style.display = "block";
+            }
+        }, 2500);
     };
-
-      startConfetti();
-
-      const show = document.getElementById("slideshow");
-      const img = document.getElementById("slideImg");
-      show.style.display = "block";
-      img.src = photos[0];
-
-      const timer = setInterval(()=>{
-        idx++;
-        if (idx < photos.length) img.src = photos[idx];
-        else {
-          clearInterval(timer);
-          document.getElementById("okBtn").style.display = "block";
-        }
-      }, 2500);
-    };
-
+    
     /* OK NOW - TYPEWRITER EFFECT */
     document.getElementById("okBtn").onclick = function() {
-      stopConfetti();
-      this.disabled = true;
-      this.innerText = "❤️";
-
-      const img = document.getElementById("slideImg");
-      img.style.transition = "transform 6s, filter 6s";
-      img.style.transform = "scale(1.2)";
-      img.style.filter = "blur(6px)";
-
-      const text = document.getElementById("finalText");
-      text.style.display = "flex";
-      
-      // TYPEWRITER TEXT with spaces and heart
-      const typewriterText = "I   Love   You   Muddu   Hendathi ❤️";
-      text.innerHTML = "";
-      
-      let i = 0;
-      const typeInterval = setInterval(() => {
-        if (i < typewriterText.length) {
-          text.innerHTML += typewriterText[i++];
-          
-          // Blinking cursor effect
-          if (i < typewriterText.length) {
-            const cursor = document.createElement('span');
-            cursor.className = 'typewriter-cursor';
-            text.appendChild(cursor);
-            
-            setTimeout(() => {
-              if (cursor.parentNode) cursor.remove();
-            }, 100);
-          }
-        } else {
-          clearInterval(typeInterval);
-          
-          // Heartbeat animation for final heart
-          const hearts = text.querySelectorAll('❤️');
-          hearts.forEach(heart => {
-            heart.classList.add('heartbeat-heart');
-          });
-          
-          // Show backup final love text
-          setTimeout(() => {
-            document.getElementById("finalLove").style.display = "block";
-          }, 3000);
-        }
-      }, 150); // Typing speed
+        stopConfetti();
+        this.style.display = "none"; 
+    
+        const img = document.getElementById("slideImg");
+        img.style.transition = "transform 6s, filter 6s";
+        img.style.transform = "scale(1.2)";
+        img.style.filter = "blur(6px)";
+    
+        const text = document.getElementById("finalText");
+        text.style.display = "flex";
+        
+        const typewriterText = "I Love You Muddu Hendathi ❤️";
+        text.innerHTML = "";
+        
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            if (i < typewriterText.length) {
+                text.innerHTML += typewriterText[i++];
+                
+                const cursor = document.createElement('span');
+                cursor.className = 'typewriter-cursor';
+                text.appendChild(cursor);
+                setTimeout(() => { if (cursor.parentNode) cursor.remove(); }, 100);
+                
+            } else {
+                clearInterval(typeInterval);
+                // Final Reveal
+                setTimeout(() => {
+                    const finalLove = document.getElementById("finalLove");
+                    if(finalLove) finalLove.style.display = "block";
+                }, 1000);
+            }
+        }, 150);
     };
   </script>
 
