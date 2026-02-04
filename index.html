@@ -1,17 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Debug</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muddamma ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #111 0%, #000 60%);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow {
+  text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+}
+
+#container {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+  animation: breathe 2s infinite;
+  margin-right: 20px;
+}
+
+#noBtn {
+  background: #444;
+  color: white;
+  position: absolute;
+}
+
+@keyframes breathe {
+  0% { box-shadow: 0 0 5px #ff4d6d; }
+  50% { box-shadow: 0 0 25px #ff4d6d; }
+  100% { box-shadow: 0 0 5px #ff4d6d; }
+}
+
+.heart {
+  position: absolute;
+  color: red;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+#slideshow, #okBtn, #finalText {
+  display: none;
+}
+
+#slideshow img {
+  max-width: 90%;
+  max-height: 70vh;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #ff4d6d;
+}
+
+#okBtn {
+  margin-top: 20px;
+  background: #ff4d6d;
+}
+
+#finalText {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  margin-top: 20px;
+}
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;">
-  <h1 id="text">Hello Muddamma 💖</h1>
-  <button id="btn">Click Me</button>
+
+<body>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<div id="container">
+  <h1 class="glow">Muddamma, will you be my Valentine? 💖</h1>
+
+  <button id="yesBtn">Yes 💘</button>
+  <button id="noBtn">No 🙈</button>
+
+  <div id="message" class="glow"></div>
+
+  <div id="slideshow">
+    <img id="slideImg">
+  </div>
+
+  <button id="okBtn">Ok now 💞</button>
+
+  <div id="finalText" class="glow"></div>
+</div>
 
 <script>
-document.getElementById("btn").onclick = () => {
-  document.getElementById("text").innerText = "JS is working ✅";
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("message");
+const slideshow = document.getElementById("slideshow");
+const slideImg = document.getElementById("slideImg");
+const okBtn = document.getElementById("okBtn");
+const finalText = document.getElementById("finalText");
+const music = document.getElementById("music");
+
+let slideIndex = 1;
+
+// floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+// No button movement
+noBtn.onclick = () => {
+  noBtn.style.top = Math.random() * 70 + "vh";
+  noBtn.style.left = Math.random() * 70 + "vw";
 };
+
+// YES logic
+yesBtn.onclick = () => {
+  music.play();
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  message.innerHTML = "Yayy, You are my Valentine today, tomorrow and forever 💖";
+  startConfetti();
+  startSlideshow();
+};
+
+// Slideshow
+function startSlideshow() {
+  slideshow.style.display = "block";
+  slideImg.src = "photo1.jpg";
+
+  const interval = setInterval(() => {
+    slideIndex++;
+    if (slideIndex > 10) {
+      clearInterval(interval);
+      okBtn.style.display = "inline-block";
+    } else {
+      slideImg.src = `photo${slideIndex}.jpg`;
+    }
+  }, 2500);
+}
+
+// OK NOW
+okBtn.onclick = () => {
+  slideImg.style.filter = "blur(4px)";
+  slideImg.style.transform = "scale(1.1)";
+  typeText("I LOVE YOU MUDDU HENDATHI ❤️");
+};
+
+// Typewriter
+function typeText(text) {
+  finalText.style.display = "block";
+  let i = 0;
+  const t = setInterval(() => {
+    finalText.innerHTML += text.charAt(i);
+    i++;
+    if (i === text.length) clearInterval(t);
+  }, 100);
+}
+
+// Confetti
+function startConfetti() {
+  for (let i = 0; i < 120; i++) {
+    const c = document.createElement("div");
+    c.style.position = "absolute";
+    c.style.width = "8px";
+    c.style.height = "8px";
+    c.style.background = ["orange","green","yellow","white"][Math.floor(Math.random()*4)];
+    c.style.top = Math.random() * 100 + "vh";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.opacity = Math.random();
+    c.style.animation = "float 4s linear infinite";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 6000);
+  }
+}
 </script>
+
 </body>
 </html>
