@@ -231,6 +231,7 @@ noBtn.addEventListener("mouseover", moveNo);
 
 /* YES logic */
 yesBtn.addEventListener("click", () => {
+  index = 0;
   document.querySelector(".container").classList.add("hidden");
   valentineMsg.classList.remove("hidden");
   slideshow.classList.remove("hidden");
@@ -252,15 +253,22 @@ function startConfetti() {
 
 /* Slideshow */
 function startSlideshow() {
-  slideImg.src = photos[index];
-  index++;
-  if (index < photos.length) {
-    setTimeout(startSlideshow, 2000);
-  } else {
+  if (index >= photos.length) {
     clearInterval(confettiInterval);
     setTimeout(() => okNow.classList.remove("hidden"), 2000);
+    return;
   }
+
+  slideImg.onload = () => {
+    setTimeout(() => {
+      index++;
+      startSlideshow();
+    }, 2000);
+  };
+
+  slideImg.src = photos[index];
 }
+
 
 /* OK NOW */
 okNow.addEventListener("click", () => {
