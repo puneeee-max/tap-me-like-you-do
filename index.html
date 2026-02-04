@@ -163,11 +163,11 @@ button {
 
 <body>
 
-<audio id="bgMusic" src="music.mp3" autoplay loop></audio>
+<audio id="bgMusic" src="love.mp3" autoplay loop></audio>
 
 <div class="container">
   <h1 class="glow">Muddamma 💕</h1>
-  <h2 class="question">Will you be my Valentine?</h2>
+  <h2 class="question">Will you be my Valentine, Muddamma?</h2>
 
   <div class="buttons-area">
     <button id="yesBtn">YES 💖</button>
@@ -176,11 +176,11 @@ button {
 </div>
 
 <div id="valentineMsg" class="hidden">
-  Yayy, You are my Valentine today, tomorrow and forever
+  Yayy, You are my Valentine today, tomorrow and forever.!!
 </div>
 
 <div class="slideshow hidden">
-  <img id="slideImg" src="photo1.jpg">
+  <img id="slideImg">
 </div>
 
 <button id="okNow" class="hidden">OK NOW 💫</button>
@@ -231,7 +231,6 @@ noBtn.addEventListener("mouseover", moveNo);
 
 /* YES logic */
 yesBtn.addEventListener("click", () => {
-  index = 0;
   document.querySelector(".container").classList.add("hidden");
   valentineMsg.classList.remove("hidden");
   slideshow.classList.remove("hidden");
@@ -252,21 +251,25 @@ function startConfetti() {
 }
 
 /* Slideshow */
+let slideshowInterval = null;
+let index = 0;
+
 function startSlideshow() {
-  if (index >= photos.length) {
-    clearInterval(confettiInterval);
-    setTimeout(() => okNow.classList.remove("hidden"), 2000);
-    return;
-  }
-
-  slideImg.onload = () => {
-    setTimeout(() => {
-      index++;
-      startSlideshow();
-    }, 2000);
-  };
-
+  index = 0;
   slideImg.src = photos[index];
+
+  slideshowInterval = setInterval(() => {
+    index++;
+
+    if (index >= photos.length) {
+      clearInterval(slideshowInterval);
+      clearInterval(confettiInterval);
+      okNow.classList.remove("hidden");
+      return;
+    }
+
+    slideImg.src = photos[index];
+  }, 2000);
 }
 
 
