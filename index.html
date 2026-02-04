@@ -6,6 +6,7 @@
 <title>For Muddamma ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
 
 <style>
 html, body {
@@ -128,16 +129,37 @@ button {
 }
 
 /* ---------- FINAL ---------- */
-#finalText {
-  display: none;
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 8vw, 3.2rem);
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+<div id="finalLove" style="
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:90%;
+  text-align:center;
+  font-family:'Playfair Display', serif;
+  font-size:1.8em;
+  font-weight:600;
+  color:#ff4d6d;
+  text-shadow:0 0 15px rgba(255,77,109,0.8);
+  line-height:1.4;
+">
+  <div id="typewriterText"></div>
+  <div style="
+    font-size:1.6em;
+    margin-top:10px;
+    animation: heartBeat 1.5s infinite;
+  ">❤️</div>
+</div>
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.15); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
+
 
 #okBtn {
   display: none;
@@ -182,7 +204,7 @@ button {
 ">
   <div style="font-size:1.8em;">Yayy..!! 💖</div>
   <div style="font-size:1.4em;">You are my Valentine</div>
-  <div style="font-size:1.2em;">Then, Now and Forever ❤️</div>
+  <div style="font-size:1.2em; font-weight:700;">Then, Now and Forever ❤️</div>
 </div>
 
 
