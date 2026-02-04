@@ -34,9 +34,28 @@ h1 {
   text-shadow: 0 0 20px #ff4d6d;
 }
 
+#message {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  min-height: 1.5em;
+}
+
+/* Valentine message at top */
+#valentineMsg {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  text-shadow: 0 0 15px #ff4d6d;
+}
+
 /* Buttons */
 #btnRow {
-  margin-top: 30px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   gap: 30px;
@@ -67,7 +86,7 @@ button {
   100% { box-shadow: 0 0 5px #ff4d6d; }
 }
 
-/* Fixed GIFs */
+/* GIFs */
 #gifTop {
   width: 130px;
   margin-bottom: 10px;
@@ -79,13 +98,6 @@ button {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-}
-
-/* Message */
-#message {
-  margin-top: 20px;
-  font-size: 1.3rem;
-  font-family: 'Playfair Display', serif;
 }
 
 /* Floating hearts */
@@ -130,8 +142,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Great Vibes', cursive;
-  font-size: 4rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
   text-shadow: 0 0 25px #ff4d6d;
   pointer-events: none;
 }
@@ -142,11 +154,15 @@ button {
 
 <audio id="music" src="love.mp3" loop autoplay></audio>
 
+<div id="valentineMsg">
+  Yayy, you are my Valentine today, tomorrow and forever 💖
+</div>
+
 <div id="container">
 
   <img id="gifTop" src="love1.gif">
 
-  <h1>Muddamma, will you be my Valentine? 💖</h1>
+  <h1 id="question">Muddamma, will you be my Valentine? 💖</h1>
 
   <div id="btnRow">
     <button id="yesBtn">Yes 💘</button>
@@ -169,7 +185,9 @@ button {
 <script>
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const question = document.getElementById("question");
 const message = document.getElementById("message");
+const valentineMsg = document.getElementById("valentineMsg");
 const slideshow = document.getElementById("slideshow");
 const slideImg = document.getElementById("slideImg");
 const okBtn = document.getElementById("okBtn");
@@ -188,7 +206,7 @@ const noTexts = [
 
 let noIndex = 0;
 let slideIndex = 1;
-let noActivated = false;
+let confettiInterval;
 
 /* Floating hearts */
 setInterval(() => {
@@ -207,11 +225,7 @@ noBtn.onclick = () => {
   message.innerText = noTexts[noIndex % noTexts.length];
   noIndex++;
 
-  if (!noActivated) {
-    noBtn.style.position = "absolute";
-    noActivated = true;
-  }
-
+  noBtn.style.position = "absolute";
   noBtn.style.top = Math.random() * 70 + "vh";
   noBtn.style.left = Math.random() * 70 + "vw";
 };
@@ -219,12 +233,14 @@ noBtn.onclick = () => {
 /* YES button */
 yesBtn.onclick = () => {
   music.play();
-  yesBtn.style.display = "none";
-  noBtn.style.display = "none";
+  question.remove();
+  yesBtn.remove();
+  noBtn.remove();
+  message.remove();
   gifTop.remove();
   gifBottom.remove();
 
-  message.innerText = "Yayy, You are my Valentine today, tomorrow and forever 💖";
+  valentineMsg.style.display = "block";
   startSlideshow();
   startConfetti();
 };
@@ -247,6 +263,7 @@ function startSlideshow() {
 
 /* OK NOW */
 okBtn.onclick = () => {
+  clearInterval(confettiInterval);
   okBtn.style.display = "none";
   slideImg.style.filter = "blur(5px)";
   slideImg.style.transform = "scale(1.1)";
@@ -264,21 +281,23 @@ function typeWriter(text) {
   }, 120);
 }
 
-/* Confetti */
+/* Continuous confetti */
 function startConfetti() {
-  for (let i = 0; i < 140; i++) {
-    const c = document.createElement("div");
-    c.style.position = "absolute";
-    c.style.width = "8px";
-    c.style.height = "8px";
-    c.style.background = ["orange","green","yellow","white"][Math.floor(Math.random()*4)];
-    c.style.top = Math.random() * 100 + "vh";
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.opacity = Math.random();
-    c.style.animation = "floatHeart 4s linear infinite";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 6000);
-  }
+  confettiInterval = setInterval(() => {
+    for (let i = 0; i < 25; i++) {
+      const c = document.createElement("div");
+      c.style.position = "absolute";
+      c.style.width = "8px";
+      c.style.height = "8px";
+      c.style.background = ["orange","green","yellow","white","indigo","blue","red","magenta"][Math.floor(Math.random()*8)];
+      c.style.top = Math.random() * 100 + "vh";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.opacity = Math.random();
+      c.style.animation = "floatHeart 4s linear infinite";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 6000);
+    }
+  }, 500);
 }
 </script>
 
